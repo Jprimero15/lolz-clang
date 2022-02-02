@@ -9,11 +9,11 @@ get_filename_component(LLVM_INSTALL_PREFIX "${LLVM_INSTALL_PREFIX}" PATH)
 # For finding self-installed Find*.cmake packages.
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
 
-set(LLVM_VERSION_MAJOR 14)
+set(LLVM_VERSION_MAJOR 15)
 set(LLVM_VERSION_MINOR 0)
 set(LLVM_VERSION_PATCH 0)
 set(LLVM_VERSION_SUFFIX git)
-set(LLVM_PACKAGE_VERSION 14.0.0git)
+set(LLVM_PACKAGE_VERSION 15.0.0git)
 set(LLVM_PACKAGE_BUGREPORT https://github.com/llvm/llvm-project/issues/)
 
 set(LLVM_BUILD_TYPE Release)
