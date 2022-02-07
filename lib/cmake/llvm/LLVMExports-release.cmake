@@ -1309,6 +1309,15 @@ set_target_properties(llvm-reduce PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS llvm-reduce )
 list(APPEND _IMPORT_CHECK_FILES_FOR_llvm-reduce "${_IMPORT_PREFIX}/bin/llvm-reduce" )
 
+# Import target "llvm-remark-size-diff" for configuration "Release"
+set_property(TARGET llvm-remark-size-diff APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(llvm-remark-size-diff PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/llvm-remark-size-diff"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS llvm-remark-size-diff )
+list(APPEND _IMPORT_CHECK_FILES_FOR_llvm-remark-size-diff "${_IMPORT_PREFIX}/bin/llvm-remark-size-diff" )
+
 # Import target "llvm-rtdyld" for configuration "Release"
 set_property(TARGET llvm-rtdyld APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(llvm-rtdyld PROPERTIES
