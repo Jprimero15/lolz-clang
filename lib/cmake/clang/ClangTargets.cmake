@@ -131,7 +131,7 @@ set_target_properties(clangAnalysis PROPERTIES
 add_library(clangAnalysisFlowSensitive STATIC IMPORTED)
 
 set_target_properties(clangAnalysisFlowSensitive PROPERTIES
-  INTERFACE_LINK_LIBRARIES "clangAnalysis;clangAST;LLVMFrontendOpenMP;LLVMSupport"
+  INTERFACE_LINK_LIBRARIES "clangAnalysis;clangAST;clangBasic;LLVMFrontendOpenMP;LLVMSupport"
 )
 
 # Create imported target clangEdit
