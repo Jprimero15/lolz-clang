@@ -152,7 +152,7 @@ set_target_properties(clangEdit PROPERTIES
 add_library(clangExtractAPI STATIC IMPORTED)
 
 set_target_properties(clangExtractAPI PROPERTIES
-  INTERFACE_LINK_LIBRARIES "clangAST;clangBasic;clangFrontend;clangIndex;LLVMSupport"
+  INTERFACE_LINK_LIBRARIES "clangAST;clangBasic;clangFrontend;clangIndex;clangLex;LLVMSupport"
 )
 
 # Create imported target clangRewrite
