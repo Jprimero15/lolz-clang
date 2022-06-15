@@ -177,11 +177,17 @@ if (NOT DEFINED LLVM_LINKER_DETECTED AND NOT WIN32)
     set(version_flag "-Wl,--version")
   endif()
 
+  if (CMAKE_HOST_WIN32)
+    set(DEVNULL "NUL")
+  else()
+    set(DEVNULL "/dev/null")
+  endif()
+
   if(LLVM_USE_LINKER)
-    set(command ${CMAKE_C_COMPILER} -fuse-ld=${LLVM_USE_LINKER} ${version_flag})
+    set(command ${CMAKE_C_COMPILER} -fuse-ld=${LLVM_USE_LINKER} ${version_flag} -o ${DEVNULL})
   else()
     separate_arguments(flags UNIX_COMMAND "${CMAKE_EXE_LINKER_FLAGS}")
-    set(command ${CMAKE_C_COMPILER} ${flags} ${version_flag})
+    set(command ${CMAKE_C_COMPILER} ${flags} ${version_flag} -o ${DEVNULL})
   endif()
   execute_process(
     COMMAND ${command}
@@ -886,9 +892,14 @@ macro(add_llvm_executable name)
 
   if (ARG_GENERATE_DRIVER)
     string(REPLACE "-" "_" TOOL_NAME ${name})
-    configure_file(
-      ${LLVM_MAIN_SRC_DIR}/cmake/driver-template.cpp.in
-      ${CMAKE_CURRENT_BINARY_DIR}/${name}-driver.cpp)
+    foreach(path ${CMAKE_MODULE_PATH})
+      if(EXISTS ${path}/llvm-driver-template.cpp.in)
+        configure_file(
+          ${path}/llvm-driver-template.cpp.in
+          ${CMAKE_CURRENT_BINARY_DIR}/${name}-driver.cpp)
+        break()
+      endif()
+    endforeach()
 
     list(APPEND ALL_FILES ${CMAKE_CURRENT_BINARY_DIR}/${name}-driver.cpp)
 
@@ -962,6 +973,9 @@ macro(add_llvm_executable name)
   llvm_config( ${name} ${USE_SHARED} ${LLVM_LINK_COMPONENTS} )
   if( LLVM_COMMON_DEPENDS )
     add_dependencies( ${name} ${LLVM_COMMON_DEPENDS} )
+    foreach(objlib ${obj_name})
+      add_dependencies(${objlib} ${LLVM_COMMON_DEPENDS})
+    endforeach()
   endif( LLVM_COMMON_DEPENDS )
 
   if(NOT ARG_IGNORE_EXTERNALIZE_DEBUGINFO)
